@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "module": "commonjs",
+    "target": "es5",
+    "sourceMap": true,
+    "jsx": "react",
+    "paths": {
+      "actions/*": ["src/actions/*"],
+      "components/*": ["src/components/*"],
+      "reducers/*": ["src/reducers/*"],
+      "selectors/*": ["src/selectors/*"],
+      "sagas/*": ["src/sagas/*"],
+      "theme/*": ["src/theme/*"]
+    }
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
