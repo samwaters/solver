@@ -6,6 +6,7 @@ import { KnownLetters } from 'components/KnownLetters/knownletters'
 import { Solutions } from 'components/Solutions/solutions'
 import { Theme, theme } from 'theme/theme'
 import { Header } from 'components/Header/header'
+import { InvalidLetters } from 'components/InvalidLetters/invalidletters'
 
 
 const GlobalStyles = createGlobalStyle<{theme: Theme}>`
@@ -37,6 +38,7 @@ export const App = () => <ThemeProvider theme={theme}>
     <Container>
       <Header />
       <KnownLetters />
+      <InvalidLetters />
       <Solutions />
     </Container>
   </ErrorBoundary>
