@@ -6,7 +6,7 @@ export const ADD_KNOWN_LETTER = 'ADD_KNOWN_LETTER'
 export const REMOVE_KNOWN_LETTER = 'REMOVE_KNOWN_LETTER'
 export const SET_KNOWN_LETTER_VALIDITY = 'SET_KNOWN_LETTER_VALIDITY'
 
-export const addInvalidLetter = (letter: string, id: string = null): Action => ({
+export const addInvalidLetter = (id: string = null, letter = ""): Action => ({
   type: ADD_INVALID_LETTER,
   payload: {
     id: id ?? new Date().getTime(),
@@ -14,7 +14,7 @@ export const addInvalidLetter = (letter: string, id: string = null): Action => (
   }
 })
 
-export const removeInvalidLetter = (id: number): Action => ({
+export const removeInvalidLetter = (id: string): Action => ({
   type: REMOVE_INVALID_LETTER,
   payload: {
     id

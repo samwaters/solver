@@ -1,5 +1,8 @@
 import * as React from 'react'
 import styled from 'styled-components'
+import {useDispatch} from "react-redux";
+import {KeyboardEvent} from "react";
+import {addInvalidLetter, removeInvalidLetter} from "actions/letters.actions";
 
 const InvalidLetterContainer = styled.div`
     align-items: center;
@@ -21,8 +24,25 @@ const InvalidLetterText = styled.span`
     font-weight: bold;
 `
 
-export const InvalidLetter = ({letter}: {letter: string}) => {
-  return <InvalidLetterContainer tabIndex={0}>
+export const InvalidLetter = ({id, letter}: {id: string, letter: string}) => {
+  const dispatch = useDispatch()
+  const handleKeyPress = (event: KeyboardEvent<HTMLDivElement>) => {
+    event.preventDefault()
+    event.stopPropagation()
+    if(/[A-Z]/i.test(event.key)) {
+      dispatch(addInvalidLetter(id, event.key.toUpperCase()))
+    }
+  }
+  const handleKeyUp = (event: KeyboardEvent<HTMLDivElement>) => {
+    if(event.code === "Backspace") {
+      dispatch(removeInvalidLetter(id))
+    }
+  }
+  return <InvalidLetterContainer
+      onKeyPress={handleKeyPress}
+      onKeyUp={handleKeyUp}
+      tabIndex={0}
+  >
     <InvalidLetterText>{letter}</InvalidLetterText>
   </InvalidLetterContainer>
 }

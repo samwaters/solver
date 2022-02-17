@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { useSelector } from 'react-redux'
 import { getInvalidLetters } from 'selectors/letters.selectors'
 import { InvalidLetter } from 'components/Letter/invalidletter'
+import { Add } from "components/InvalidLetters/add";
 
 const Container = styled.div`
   display: grid;
@@ -15,6 +16,7 @@ const Container = styled.div`
 export const InvalidLetters = () => {
   const invalidLetters = useSelector(getInvalidLetters)
   return <Container>
-    {Object.keys(invalidLetters).map((key: string) => <InvalidLetter key={key} letter={invalidLetters[key]} />)}
+    <Add />
+    {Object.keys(invalidLetters).map((key: string) => <InvalidLetter id={key} key={key} letter={invalidLetters[key]} />)}
   </Container>
 }

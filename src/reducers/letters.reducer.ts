@@ -1,5 +1,10 @@
 import { Action } from 'actions/action.interface'
-import { ADD_KNOWN_LETTER, REMOVE_KNOWN_LETTER, SET_KNOWN_LETTER_VALIDITY } from 'actions/letters.actions'
+import {
+  ADD_INVALID_LETTER,
+  ADD_KNOWN_LETTER, REMOVE_INVALID_LETTER,
+  REMOVE_KNOWN_LETTER,
+  SET_KNOWN_LETTER_VALIDITY
+} from 'actions/letters.actions'
 
 export interface LettersState {
   invalidLetters: {
@@ -14,9 +19,7 @@ export interface LettersState {
 }
 
 const initialState: LettersState = {
-  invalidLetters: {
-    16699: "Z"
-  },
+  invalidLetters: {},
   knownLetters: {
     0: {letter: "", valid: null},
     1: {letter: "", valid: null},
@@ -35,6 +38,28 @@ export const lettersReducer = (state: LettersState = initialState, action: Actio
           ...state.knownLetters,
           [action.payload.index]: {letter: action.payload.letter, valid: action.payload.valid}
         }
+      }
+    case ADD_INVALID_LETTER:
+      return {
+        ...state,
+        invalidLetters: {
+          ...state.invalidLetters,
+          [action.payload.id]: action.payload.letter
+        }
+      }
+    case REMOVE_INVALID_LETTER:
+      return {
+        ...state,
+        invalidLetters: Object
+            .keys(state.invalidLetters)
+            .filter(id => id !== action.payload.id)
+            .reduce(
+                (acc, cur) => {
+                  acc[cur] = state.invalidLetters[cur]
+                  return acc
+                },
+                {}
+            )
       }
     case REMOVE_KNOWN_LETTER:
       return {
