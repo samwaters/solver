@@ -15,7 +15,8 @@ module.exports = {
         app: APP_DIR + '/index.tsx',
         vendor: [
             '@redux-saga/core', 'react', 'react-dom', 'react-redux', 'redux'
-        ]
+        ],
+        worker: APP_DIR + '/worker/worker.ts'
     },
     mode: process.env.NODE_ENV || 'development',
     module: {
