@@ -16,8 +16,12 @@ export default {
     "^components(.*)": "<rootDir>/src/components$1",
     "^selectors(.*)": "<rootDir>/src/selectors$1",
     "^theme(.*)": "<rootDir>/src/theme$1",
+    "^utils(.*)": "<rootDir>/src/utils$1",
   },
   roots: ['<rootDir>'],
+  setupFilesAfterEnv: [
+    "<rootDir>/src/utils/test.utils.ts"
+  ],
   testEnvironment: "jsdom",
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',

@@ -11,7 +11,8 @@
       "reducers/*": ["src/reducers/*"],
       "selectors/*": ["src/selectors/*"],
       "sagas/*": ["src/sagas/*"],
-      "theme/*": ["src/theme/*"]
+      "theme/*": ["src/theme/*"],
+      "utils/*": ["src/utils/*"]
     }
   },
   "exclude": [

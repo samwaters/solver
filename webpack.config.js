@@ -54,7 +54,8 @@ module.exports = {
             components: path.resolve(__dirname, 'src', 'components'),
             reducers: path.resolve(__dirname, 'src', 'reducers'),
             selectors: path.resolve(__dirname, 'src', 'selectors'),
-            theme: path.resolve(__dirname, 'src', 'theme')
+            theme: path.resolve(__dirname, 'src', 'theme'),
+            utils: path.resolve(__dirname, 'src', 'utils')
         },
         extensions: ['.css', '.js', '.jsx', '.json', '.scss', '.ts', '.tsx'],
         modules: ['node_modules']
