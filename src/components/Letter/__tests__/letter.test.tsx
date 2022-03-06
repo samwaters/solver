@@ -33,7 +33,7 @@ describe('components/letter', () => {
         )
         expect(screen.getByTestId('Letter0')).toHaveTextContent('A')
         expect(screen.getByTestId('Letter0')).toHaveStyle(
-            `background-color: ${theme.letter.valid}`
+            `background-color: ${theme.letter.valid}; height: 100px; width: 100px;`
         )
         expect(screen.getByText('A')).toBeInTheDocument()
     })
