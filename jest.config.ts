@@ -14,6 +14,7 @@ export default {
   moduleNameMapper: {
     "^actions(.*)": "<rootDir>/src/actions$1",
     "^components(.*)": "<rootDir>/src/components$1",
+    "^reducers(.*)": "<rootDir>/src/reducers$1",
     "^selectors(.*)": "<rootDir>/src/selectors$1",
     "^theme(.*)": "<rootDir>/src/theme$1",
     "^utils(.*)": "<rootDir>/src/utils$1",
