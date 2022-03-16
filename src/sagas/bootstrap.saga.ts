@@ -1,11 +1,12 @@
-import { put, takeEvery } from '@redux-saga/core/effects'
+import { call, put, takeEvery } from '@redux-saga/core/effects'
+import { BOOTSTRAP, ready } from 'actions/bootstrap.actions'
 
-import { BOOTSTRAP } from 'actions/bootstrap.actions'
-
-function * bootstrap() {
-  // yield put(loadConfig())
+function* bootstrap() {
+    const data = yield call(fetch, '/words.json')
+    const parsedData = yield data.json()
+    yield put(ready())
 }
 
-export function * bootstrapSaga() {
-  yield takeEvery(BOOTSTRAP, bootstrap)
+export function* bootstrapSaga() {
+    yield takeEvery(BOOTSTRAP, bootstrap)
 }
