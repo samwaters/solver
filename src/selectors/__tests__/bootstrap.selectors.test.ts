@@ -1,11 +1,11 @@
 import { AppState } from 'reducers/index'
-import { getInvalidLetters, getLetterById } from 'selectors/letters.selectors'
+import { isBootstrapped, isReady } from 'selectors/bootstrap.selectors'
 
-describe('selectors/letters.selectors', () => {
+describe('selectors/bootstrap.selectors', () => {
     const appState: AppState = {
         bootstrap: {
             bootstrap: false,
-            ready: false,
+            ready: true,
         },
         letters: {
             invalidLetters: {
@@ -21,13 +21,10 @@ describe('selectors/letters.selectors', () => {
         },
         words: {},
     }
-    it('Should get a known letter', () => {
-        expect(getLetterById(0)(appState)).toStrictEqual({
-            letter: 'B',
-            valid: true,
-        })
+    it('Should get the bootstrapped state', () => {
+        expect(isBootstrapped(appState)).toBeFalsy()
     })
-    it('Should get the invalid letters', () => {
-        expect(getInvalidLetters(appState)).toStrictEqual({ 0: 'A' })
+    it('Should get the ready state', () => {
+        expect(isReady(appState)).toBeTruthy()
     })
 })
