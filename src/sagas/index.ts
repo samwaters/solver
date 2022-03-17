@@ -1,14 +1,10 @@
 import { all, put } from '@redux-saga/core/effects'
 
-import { bootstrap, ready } from 'actions/bootstrap.actions'
+import { bootstrap } from 'actions/bootstrap.actions'
 import { bootstrapSaga } from './bootstrap.saga'
 
 function* rootSaga() {
-    yield all([
-        bootstrapSaga(),
-        put(bootstrap()),
-        //put(ready())
-    ])
+    yield all([bootstrapSaga(), put(bootstrap())])
 }
 
 export { rootSaga }

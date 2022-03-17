@@ -27,7 +27,6 @@ const LoadingSpinner = styled.div`
         left: 32px;
     }
     div:nth-child(3) {
-        animation-delay: 0;
         left: 56px;
     }
     @keyframes loading {
@@ -50,9 +49,9 @@ const LoadingText = styled.div`
 export const Loading = () => (
     <LoadingContainer>
         <LoadingSpinner>
-            <div></div>
-            <div></div>
-            <div></div>
+            <div />
+            <div />
+            <div />
         </LoadingSpinner>
         <LoadingText>Loading, Please Wait...</LoadingText>
     </LoadingContainer>
