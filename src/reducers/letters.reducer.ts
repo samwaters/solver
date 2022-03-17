@@ -33,7 +33,7 @@ const initialState: LettersState = {
 export const lettersReducer = (
     state: LettersState = initialState,
     action: Action
-) => {
+): LettersState => {
     switch (action.type) {
         case ADD_INVALID_LETTER:
             return {

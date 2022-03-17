@@ -4,6 +4,7 @@ import { AppState } from 'reducers/index'
 
 const mockStoreState: AppState = {
     bootstrap: {
+        bootstrap: true,
         ready: true,
     },
     letters: {
