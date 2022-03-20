@@ -12,6 +12,10 @@ function* initialise(params: Action) {
         )
     )
     worker.postMessage({
+        type: 'SET_ID',
+        payload: params.payload.id,
+    })
+    worker.postMessage({
         type: 'LOAD_DATA',
         payload: words.flat(),
     })
