@@ -28,12 +28,12 @@ describe('components/letter', () => {
     it('Renders a valid letter', () => {
         render(
             <Wrapper>
-                <Letter data-testid="Letter0" id={0} />
+                <Letter data-testid="Letter0" row={0} id={0} />
             </Wrapper>
         )
         expect(screen.getByTestId('Letter0')).toHaveTextContent('A')
         expect(screen.getByTestId('Letter0')).toHaveStyle(
-            `background-color: ${theme.letter.valid}; height: 100px; width: 100px;`
+            `background-color: ${theme.letter.valid}; height: 75px; width: 75px;`
         )
         expect(screen.getByText('A')).toBeInTheDocument()
     })
@@ -41,7 +41,7 @@ describe('components/letter', () => {
     it('Renders an invalid letter', () => {
         render(
             <Wrapper>
-                <Letter data-testid="Letter1" id={1} />
+                <Letter data-testid="Letter1" row={0} id={1} />
             </Wrapper>
         )
         expect(screen.getByTestId('Letter1')).toHaveTextContent('B')
@@ -54,7 +54,7 @@ describe('components/letter', () => {
     it('Renders an empty letter', () => {
         render(
             <Wrapper>
-                <Letter data-testid="Letter2" id={2} />
+                <Letter data-testid="Letter2" row={0} id={2} />
             </Wrapper>
         )
         expect(screen.getByTestId('Letter2')).toHaveTextContent('')
@@ -66,14 +66,14 @@ describe('components/letter', () => {
     it('Dispatches an action when a letter is clicked', () => {
         render(
             <Wrapper>
-                <Letter id={0} />
+                <Letter row={0} id={0} />
             </Wrapper>
         )
         expect(store.getActions()).toStrictEqual([])
         fireEvent.click(screen.getByText('A'))
         expect(store.getActions()).toStrictEqual([
             {
-                payload: { index: 0, valid: false },
+                payload: { index: 0, row: 0, valid: null },
                 type: SET_KNOWN_LETTER_VALIDITY,
             },
         ])
@@ -82,7 +82,7 @@ describe('components/letter', () => {
     it('Handles a keypress on a letter', async () => {
         render(
             <Wrapper>
-                <Letter id={0} />
+                <Letter row={0} id={0} />
             </Wrapper>
         )
         expect(store.getActions()).toStrictEqual([])
@@ -93,7 +93,7 @@ describe('components/letter', () => {
         })
         expect(store.getActions()).toStrictEqual([
             {
-                payload: { index: 0, letter: 'B', valid: true },
+                payload: { index: 0, letter: 'B', row: 0, valid: true },
                 type: ADD_KNOWN_LETTER,
             },
         ])
@@ -102,7 +102,7 @@ describe('components/letter', () => {
     it('Handles removing a letter', async () => {
         render(
             <Wrapper>
-                <Letter id={0} />
+                <Letter row={0} id={0} />
             </Wrapper>
         )
         expect(store.getActions()).toStrictEqual([])
@@ -113,7 +113,7 @@ describe('components/letter', () => {
         })
         expect(store.getActions()).toStrictEqual([
             {
-                payload: { index: 0 },
+                payload: { index: 0, row: 0 },
                 type: REMOVE_KNOWN_LETTER,
             },
         ])

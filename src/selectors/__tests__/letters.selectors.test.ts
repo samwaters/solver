@@ -1,5 +1,5 @@
 import { AppState } from 'reducers/index'
-import { getInvalidLetters, getLetterById } from 'selectors/letters.selectors'
+import { getLetterById } from 'selectors/letters.selectors'
 
 describe('selectors/letters.selectors', () => {
     const appState: AppState = {
@@ -8,26 +8,24 @@ describe('selectors/letters.selectors', () => {
             ready: false,
         },
         letters: {
-            invalidLetters: {
-                0: 'A',
-            },
             knownLetters: {
-                0: { letter: 'B', valid: true },
-                1: { letter: '', valid: null },
-                2: { letter: '', valid: null },
-                3: { letter: '', valid: null },
-                4: { letter: '', valid: null },
+                0: {
+                    0: { letter: 'B', valid: true },
+                    1: { letter: '', valid: null },
+                    2: { letter: '', valid: null },
+                    3: { letter: '', valid: null },
+                    4: { letter: '', valid: null },
+                },
             },
         },
+        solutions: {},
         words: {},
+        workers: {},
     }
     it('Should get a known letter', () => {
-        expect(getLetterById(0)(appState)).toStrictEqual({
+        expect(getLetterById(0, 0)(appState)).toStrictEqual({
             letter: 'B',
             valid: true,
         })
-    })
-    it('Should get the invalid letters', () => {
-        expect(getInvalidLetters(appState)).toStrictEqual({ 0: 'A' })
     })
 })

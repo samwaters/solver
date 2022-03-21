@@ -8,21 +8,14 @@ describe('selectors/words.selectors', () => {
             ready: false,
         },
         letters: {
-            invalidLetters: {
-                0: 'A',
-            },
-            knownLetters: {
-                0: { letter: 'B', valid: true },
-                1: { letter: '', valid: null },
-                2: { letter: '', valid: null },
-                3: { letter: '', valid: null },
-                4: { letter: '', valid: null },
-            },
+            knownLetters: {},
         },
+        solutions: {},
         words: {
             A: ['ABC', 'ACD'],
             B: ['BCD', 'BDE'],
         },
+        workers: {},
     }
     it('Should get words starting with valid letters', () => {
         expect(getWordsStartingWith('A')(appState)).toStrictEqual([

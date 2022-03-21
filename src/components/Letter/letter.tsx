@@ -20,9 +20,9 @@ const LetterContainer = styled.div<{ isValid: boolean }>`
     border-radius: 5px;
     color: ${(props) => props.theme.letter.color};
     display: flex;
-    height: 100px;
+    height: 75px;
     justify-content: center;
-    width: 100px;
+    width: 75px;
     :focus {
         border: 2px solid orange;
         outline: 0;
@@ -30,19 +30,21 @@ const LetterContainer = styled.div<{ isValid: boolean }>`
 `
 const LetterText = styled.span`
     font-family: 'Helvetica Neue', 'sans-serif';
-    font-size: 60px;
+    font-size: 48px;
     font-weight: bold;
 `
 
-export const Letter = ({ id, ...rest }: { id: number }) => {
+export const Letter = ({ id, row, ...rest }: { id: number; row: number }) => {
     const dispatch = useDispatch()
-    const letter = useSelector(getLetterById(id))
+    const letter = useSelector(getLetterById(row, id))
+
     const handleKeyPress = (event: KeyboardEvent<HTMLDivElement>) => {
         event.preventDefault()
         event.stopPropagation()
         if (/[A-Z]/i.test(event.key)) {
             dispatch(
                 addKnownLetter(
+                    row,
                     id,
                     event.key.toUpperCase(),
                     letter.valid ?? false
@@ -52,7 +54,7 @@ export const Letter = ({ id, ...rest }: { id: number }) => {
     }
     const handleKeyUp = (event: KeyboardEvent<HTMLDivElement>) => {
         if (event.code === 'Backspace') {
-            dispatch(removeKnownLetter(id))
+            dispatch(removeKnownLetter(row, id))
         }
     }
     return (
@@ -61,8 +63,13 @@ export const Letter = ({ id, ...rest }: { id: number }) => {
             onClick={() =>
                 dispatch(
                     setKnownLetterValidity(
+                        row,
                         id,
-                        letter.valid === null ? false : !letter.valid
+                        letter.valid === null
+                            ? false
+                            : letter.valid === false
+                            ? true
+                            : null
                     )
                 )
             }

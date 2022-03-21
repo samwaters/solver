@@ -1,15 +1,14 @@
 import * as React from 'react'
+import { useSelector } from 'react-redux'
 import styled, { createGlobalStyle, ThemeProvider } from 'styled-components'
 import { Reset } from 'styled-reset'
 import { ErrorBoundary } from 'components/ErrorBoundary/errorboundary'
+import { Header } from 'components/Header/header'
 import { KnownLetters } from 'components/KnownLetters/knownletters'
 import { Loading } from 'components/Loading/loading'
 import { Solutions } from 'components/Solutions/solutions'
-import { Theme, theme } from 'theme/theme'
-import { Header } from 'components/Header/header'
-import { InvalidLetters } from 'components/InvalidLetters/invalidletters'
-import { useSelector } from 'react-redux'
 import { isReady } from 'selectors/bootstrap.selectors'
+import { Theme, theme } from 'theme/theme'
 
 const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
   * { box-sizing: border-box; }
@@ -29,7 +28,13 @@ const Container = styled.div`
     }
 `
 
-const Section = styled.div``
+const GameContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto;
+`
+
+const LettersContainer = styled.div``
 
 export const App = () => {
     const ready = useSelector(isReady)
@@ -42,9 +47,16 @@ export const App = () => {
                 {ready && (
                     <Container>
                         <Header />
-                        <KnownLetters />
-                        <InvalidLetters />
-                        <Solutions />
+                        <GameContainer>
+                            <LettersContainer>
+                                <KnownLetters row={0} />
+                                <KnownLetters row={1} />
+                                <KnownLetters row={2} />
+                                <KnownLetters row={3} />
+                                <KnownLetters row={4} />
+                            </LettersContainer>
+                            <Solutions />
+                        </GameContainer>
                     </Container>
                 )}
             </ErrorBoundary>

@@ -8,15 +8,19 @@ const mockStoreState: AppState = {
         ready: true,
     },
     letters: {
-        invalidLetters: {},
         knownLetters: {
-            0: { letter: 'A', valid: true },
-            1: { letter: 'B', valid: false },
-            2: { letter: '', valid: null },
-            3: { letter: '', valid: null },
-            4: { letter: '', valid: null },
+            0: {
+                0: { letter: 'A', valid: true },
+                1: { letter: 'B', valid: false },
+                2: { letter: '', valid: null },
+                3: { letter: '', valid: null },
+                4: { letter: '', valid: null },
+            },
         },
     },
+    solutions: {},
+    words: {},
+    workers: {},
 }
 
 export const getStore = () => {
