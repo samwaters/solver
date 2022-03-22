@@ -74,8 +74,10 @@ const findSolutions = () => {
         (invalidLettersAccumulator, currentRow) => {
             return [
                 ...invalidLettersAccumulator,
-                ...knownLetters[currentRow].reduce(
-                    (rowAccumulator, currentLetter) => {
+                ...Object.keys(knownLetters[currentRow]).reduce(
+                    (rowAccumulator, currentKey) => {
+                        const currentLetter =
+                            knownLetters[currentRow][currentKey]
                         if (
                             currentLetter.letter !== '' &&
                             currentLetter.valid === null
@@ -89,27 +91,28 @@ const findSolutions = () => {
         },
         []
     )
-    let solutions = []
+    const mustContain: string[] = []
+    let solutions: string[] = []
     // Find the positions of the known letters
     const letterPositions = Object.keys(knownLetters)
         .reduce(
             (acc, cur) => {
-                return knownLetters[cur].map(
-                    (
-                        l: { valid: boolean; letter: string },
-                        i: string | number
-                    ) => {
+                return Object.keys(knownLetters[cur]).map(
+                    (k: string, i: string | number) => {
+                        const letter = knownLetters[cur][k]
                         // Already a known letter?
                         if (typeof acc[i] === 'string' && acc[i] !== '.')
                             return acc[i]
                         // Valid letter, priority
-                        if (l.valid) return l.letter
+                        if (letter.valid) return letter.letter
                         // No letter
-                        if (l.letter === '') return acc[i]
+                        if (letter.letter === '') return acc[i]
                         // Invalid letter
+                        if (!mustContain.includes(letter.letter))
+                            mustContain.push(letter.letter)
                         return Array.isArray(acc[i])
-                            ? [...acc[i], l.letter]
-                            : [l.letter]
+                            ? [...acc[i], letter.letter]
+                            : [letter.letter]
                     }
                 )
             },
@@ -121,21 +124,28 @@ const findSolutions = () => {
         .join('')
     const letterPattern = new RegExp(letterPositions)
     // Find the positions of the letters that are in the wrong place
-    words.every((word) => {
+    words.every((word: string) => {
         if (!working) {
             solutions = []
             return false
         }
+        const upperWord = word.toUpperCase()
         // Does this word contain any of the invalid letters?
-        if (invalidLetters.some((letter) => word.includes(letter))) {
+        if (invalidLetters.some((letter) => upperWord.includes(letter))) {
             // There's at least one invalid letter, skip this word
             return true
         }
         // Test against the pattern
-        if (!letterPattern.test(word)) {
+        if (!letterPattern.test(upperWord)) {
             // Doesn't match the known letters
             return true
         }
+        // Make sure the word contains the letters in the invalid positions
+        const doesContain = mustContain.reduce(
+            (acc, cur) => (upperWord.includes(cur) ? acc : false),
+            true
+        )
+        if (!doesContain) return true
         // If we get this far, it's valid
         solutions.push(word)
         return true

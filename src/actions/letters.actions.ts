@@ -30,12 +30,14 @@ export const removeKnownLetter = (row: number, index: number): Action => ({
 export const setKnownLetterValidity = (
     row: number,
     index: number,
+    letter: string,
     valid: boolean
 ): Action => ({
     type: SET_KNOWN_LETTER_VALIDITY,
     payload: {
         index,
         row,
+        letter,
         valid,
     },
 })

@@ -10,6 +10,7 @@ import {
     SET_KNOWN_LETTER_VALIDITY,
 } from 'actions/letters.actions'
 import { getAllWorkers } from 'selectors/workers.selectors'
+import { store } from '../index'
 
 function* initialise(params: Action) {
     const worker = new Worker('/worker.prod.js')
@@ -25,8 +26,12 @@ function* initialise(params: Action) {
     worker.onmessage = (message) => {
         switch (message.data?.type) {
             case 'SOLUTIONS':
-                // TODO: This does not dispatch
-                put(addSolutions(message.data.solutions, message.data.id))
+                store.dispatch(
+                    addSolutions(
+                        message.data.payload.solutions,
+                        message.data.payload.id
+                    )
+                )
                 break
             default:
                 console.error(
@@ -45,7 +50,12 @@ function* initialise(params: Action) {
 function* updateWorkers(params: Action) {
     const workers = yield select(getAllWorkers)
     Object.keys(workers).forEach((id) => {
-        workers[id].postMessage({ ...params, type: 'UPDATE_LETTERS' })
+        workers[id].postMessage({
+            payload: {
+                ...params.payload,
+            },
+            type: 'UPDATE_LETTERS',
+        })
     })
 }
 

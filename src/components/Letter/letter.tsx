@@ -65,6 +65,7 @@ export const Letter = ({ id, row, ...rest }: { id: number; row: number }) => {
                     setKnownLetterValidity(
                         row,
                         id,
+                        letter.letter,
                         letter.valid === null
                             ? false
                             : letter.valid === false

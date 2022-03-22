@@ -73,7 +73,7 @@ describe('components/letter', () => {
         fireEvent.click(screen.getByText('A'))
         expect(store.getActions()).toStrictEqual([
             {
-                payload: { index: 0, row: 0, valid: null },
+                payload: { index: 0, letter: 'A', row: 0, valid: null },
                 type: SET_KNOWN_LETTER_VALIDITY,
             },
         ])

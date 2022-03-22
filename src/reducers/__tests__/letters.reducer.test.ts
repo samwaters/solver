@@ -60,7 +60,10 @@ describe('reducers/letters.reducer', () => {
             letter: 'A',
             valid: false,
         })
-        newState = lettersReducer(newState, setKnownLetterValidity(0, 0, true))
+        newState = lettersReducer(
+            newState,
+            setKnownLetterValidity(0, 0, 'A', true)
+        )
         expect(newState.knownLetters[0][0]).toStrictEqual({
             letter: 'A',
             valid: true,
