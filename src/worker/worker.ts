@@ -106,7 +106,8 @@ const findSolutions = () => {
                         // Valid letter, priority
                         if (letter.valid) return letter.letter
                         // No letter
-                        if (letter.letter === '') return acc[i]
+                        if (letter.letter === '' || letter.valid === null)
+                            return acc[i]
                         // Invalid letter
                         if (!mustContain.includes(letter.letter))
                             mustContain.push(letter.letter)
