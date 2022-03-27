@@ -1,6 +1,7 @@
 import '@testing-library/jest-dom/extend-expect'
 import configureStore from 'redux-mock-store'
 import { AppState } from 'reducers/index'
+require('isomorphic-fetch')
 
 const mockStoreState: AppState = {
     bootstrap: {
