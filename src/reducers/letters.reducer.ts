@@ -4,6 +4,7 @@ import {
     REMOVE_KNOWN_LETTER,
     SET_KNOWN_LETTER_VALIDITY,
 } from 'actions/letters.actions'
+import { RESET } from 'actions/reset.actions'
 
 export interface LettersState {
     knownLetters: {
@@ -86,6 +87,8 @@ export const lettersReducer = (
                     },
                 },
             }
+        case RESET:
+            return initialState
         case SET_KNOWN_LETTER_VALIDITY:
             return {
                 ...state,

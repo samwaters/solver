@@ -23,7 +23,9 @@ export const removeKnownLetter = (row: number, index: number): Action => ({
     type: REMOVE_KNOWN_LETTER,
     payload: {
         index,
+        letter: '',
         row,
+        valid: null,
     },
 })
 

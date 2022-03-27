@@ -1,8 +1,9 @@
 import { Action } from 'actions/action.interface'
 import { ADD_SOLUTIONS, CLEAR_SOLUTIONS } from 'actions/solutions.actions'
+import { RESET } from 'actions/reset.actions'
 
 export interface SolutionsState {
-    [workerId: number]: string[]
+    [workerId: number | string]: string[]
 }
 
 const initialState: SolutionsState = {}
@@ -18,6 +19,8 @@ export const solutionsReducer = (
                 [action.payload.workerId]: action.payload.solutions,
             }
         case CLEAR_SOLUTIONS:
+            return initialState
+        case RESET:
             return initialState
         default:
             return state

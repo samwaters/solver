@@ -113,7 +113,7 @@ describe('components/letter', () => {
         })
         expect(store.getActions()).toStrictEqual([
             {
-                payload: { index: 0, row: 0 },
+                payload: { index: 0, letter: '', row: 0, valid: null },
                 type: REMOVE_KNOWN_LETTER,
             },
         ])

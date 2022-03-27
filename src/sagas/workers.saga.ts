@@ -11,6 +11,7 @@ import {
 } from 'actions/letters.actions'
 import { getAllWorkers } from 'selectors/workers.selectors'
 import { store } from '../index'
+import { RESET } from 'actions/reset.actions'
 
 function* initialise(params: Action) {
     const worker = new Worker('/worker.prod.js')
@@ -47,6 +48,15 @@ function* initialise(params: Action) {
     yield put(registerWorker(params.payload.id, worker))
 }
 
+function* reset() {
+    const workers = yield select(getAllWorkers)
+    Object.keys(workers).forEach((id) => {
+        workers[id].postMessage({
+            type: 'RESET',
+        })
+    })
+}
+
 function* updateWorkers(params: Action) {
     const workers = yield select(getAllWorkers)
     Object.keys(workers).forEach((id) => {
@@ -63,5 +73,6 @@ export function* workersSaga() {
     yield takeEvery(INITIALISE_WORKER, initialise)
     yield takeEvery(ADD_KNOWN_LETTER, updateWorkers)
     yield takeEvery(REMOVE_KNOWN_LETTER, updateWorkers)
+    yield takeEvery(RESET, reset)
     yield takeEvery(SET_KNOWN_LETTER_VALIDITY, updateWorkers)
 }

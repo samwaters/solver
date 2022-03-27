@@ -18,7 +18,9 @@ const mockStoreState: AppState = {
             },
         },
     },
-    solutions: {},
+    solutions: {
+        'A-C': ['apple', 'banana', 'carrot'],
+    },
     words: {},
     workers: {},
 }

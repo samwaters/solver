@@ -37,9 +37,11 @@ const SolutionsListItem = styled.li`
 export const Solutions = () => {
     const solutions = useSelector(getAllSolutions)
     return (
-        <SolutionsContainer>
-            <SolutionsTitle>Possible Solutions</SolutionsTitle>
-            <SolutionsListContainer>
+        <SolutionsContainer data-testid="solutions-container">
+            <SolutionsTitle data-testid="solutions-title">
+                Possible Solutions
+            </SolutionsTitle>
+            <SolutionsListContainer data-testid="solutions-list-container">
                 <SolutionsList>
                     {solutions.map((solution, id) => (
                         <SolutionsListItem key={id}>

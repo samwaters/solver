@@ -1,12 +1,11 @@
 import { solutionsReducer, SolutionsState } from 'reducers/solutions.reducer'
 import { addSolutions, clearSolutions } from 'actions/solutions.actions'
+import { reset } from 'actions/reset.actions'
 
 describe('reducers/bootstrap.reducer', () => {
-    const initialState: SolutionsState = {}
-
     it('Handles the ADD_SOLUTIONS action', () => {
         const newState: SolutionsState = solutionsReducer(
-            initialState,
+            undefined,
             addSolutions(['FOO', 'BAR'], 0)
         )
         expect(newState).toStrictEqual({
@@ -15,17 +14,16 @@ describe('reducers/bootstrap.reducer', () => {
     })
     it('Handles the CLEAR_SOLUTIONS action', () => {
         const newState: SolutionsState = solutionsReducer(
-            initialState,
+            undefined,
             addSolutions(['FOO', 'BAR'], 0)
         )
-        expect(solutionsReducer(newState, clearSolutions())).toStrictEqual(
-            initialState
-        )
+        expect(solutionsReducer(newState, clearSolutions())).toStrictEqual({})
     })
-    it('Ignores other actions', () => {
-        const newState: SolutionsState = solutionsReducer(initialState, {
-            type: 'FOO',
-        })
-        expect(newState).toStrictEqual(initialState)
+    it('Handles the RESET action', () => {
+        const newState: SolutionsState = solutionsReducer(
+            undefined,
+            addSolutions(['FOO', 'BAR'], 0)
+        )
+        expect(solutionsReducer(newState, reset())).toStrictEqual({})
     })
 })

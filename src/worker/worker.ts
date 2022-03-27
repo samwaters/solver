@@ -1,5 +1,6 @@
 enum Commands {
     LOAD_DATA = 'LOAD_DATA',
+    RESET = 'RESET',
     SET_ID = 'SET_ID',
     UPDATE_LETTERS = 'UPDATE_LETTERS',
 }
@@ -50,6 +51,14 @@ onmessage = (message: MessageEvent) => {
             working = false
             words = message.data.payload
             break
+        case Commands.RESET:
+            Object.keys(knownLetters).forEach((row) => {
+                knownLetters[row] = knownLetters[row].map(() => ({
+                    letter: '',
+                    valid: null,
+                }))
+            })
+            break
         case Commands.SET_ID:
             id = message.data.payload
             break
@@ -91,6 +100,10 @@ const findSolutions = () => {
         },
         []
     )
+    /*
+        TODO:
+        Fix issue with valid and invalid letters, e.g. BEERS
+     */
     const mustContain: string[] = []
     let solutions: string[] = []
     // Find the positions of the known letters
