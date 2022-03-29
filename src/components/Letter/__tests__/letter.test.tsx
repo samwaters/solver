@@ -38,7 +38,7 @@ describe('components/letter', () => {
         expect(screen.getByText('A')).toBeInTheDocument()
     })
 
-    it('Renders an invalid letter', () => {
+    it('Renders a known letter in the wrong place', () => {
         render(
             <Wrapper>
                 <Letter data-testid="Letter1" row={0} id={1} />
@@ -51,14 +51,27 @@ describe('components/letter', () => {
         expect(screen.getByText('B')).toBeInTheDocument()
     })
 
-    it('Renders an empty letter', () => {
+    it('Renders an invalid letter', () => {
         render(
             <Wrapper>
                 <Letter data-testid="Letter2" row={0} id={2} />
             </Wrapper>
         )
-        expect(screen.getByTestId('Letter2')).toHaveTextContent('')
+        expect(screen.getByTestId('Letter2')).toHaveTextContent('C')
         expect(screen.getByTestId('Letter2')).toHaveStyle(
+            `background-color: ${theme.letter.default}`
+        )
+        expect(screen.getByText('C')).toBeInTheDocument()
+    })
+
+    it('Renders an empty letter', () => {
+        render(
+            <Wrapper>
+                <Letter data-testid="Letter3" row={0} id={3} />
+            </Wrapper>
+        )
+        expect(screen.getByTestId('Letter3')).toHaveTextContent('')
+        expect(screen.getByTestId('Letter3')).toHaveStyle(
             `background-color: ${theme.letter.default}`
         )
     })

@@ -13,7 +13,7 @@ const mockStoreState: AppState = {
             0: {
                 0: { letter: 'A', valid: true },
                 1: { letter: 'B', valid: false },
-                2: { letter: '', valid: null },
+                2: { letter: 'C', valid: null },
                 3: { letter: '', valid: null },
                 4: { letter: '', valid: null },
             },

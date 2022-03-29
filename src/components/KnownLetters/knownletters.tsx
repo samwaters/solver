@@ -11,7 +11,7 @@ const Container = styled.div`
 `
 
 export const KnownLetters = ({ row }: { row: number }) => (
-    <Container>
+    <Container data-testid="knownletters-container">
         <Letter id={0} row={row} />
         <Letter id={1} row={row} />
         <Letter id={2} row={row} />
