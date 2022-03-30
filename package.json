@@ -48,8 +48,10 @@
   },
   "scripts": {
     "build": "webpack",
+    "postinstall": "scripts/install-codecov.sh",
     "prepare": "husky install",
     "start": "webpack-dev-server",
-    "test": "jest"
+    "test": "jest",
+    "upload-coverage": "scripts/upload-coverage.sh"
   }
 }

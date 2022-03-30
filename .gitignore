@@ -4,3 +4,7 @@ yarn.error
 coverage/*
 dist/*.js
 dist/*.txt
+scripts/codecov
+scripts/codecov.SHA256SUM
+.env
+
