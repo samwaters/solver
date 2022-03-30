@@ -1,4 +1,5 @@
 # Solver
+[![codecov](https://codecov.io/gh/samwaters/solver/branch/master/graph/badge.svg?token=HXHN5WOD9C)](https://codecov.io/gh/samwaters/solver)  
 Easily solve word puzzles
 ## Technical Notes
 Built with `React`, `Redux`, `Sagas` and `styled-components`  
