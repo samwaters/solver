@@ -4,11 +4,7 @@ import { Provider } from 'react-redux'
 import { ThemeProvider } from 'styled-components'
 import { fireEvent, render, screen } from '@testing-library/react'
 
-import {
-    ADD_KNOWN_LETTER,
-    REMOVE_KNOWN_LETTER,
-    SET_KNOWN_LETTER_VALIDITY,
-} from 'actions/letters.actions'
+import { ADD_KNOWN_LETTER, REMOVE_KNOWN_LETTER } from 'actions/letters.actions'
 import { Letter } from 'components/Letter/letter'
 import { theme } from 'theme/theme'
 import { getStore } from 'utils/test.utils'
@@ -76,20 +72,19 @@ describe('components/letter', () => {
         )
     })
 
-    it('Dispatches an action when a letter is clicked', () => {
+    it('Shows the trash icon and validity selector on mouse over', () => {
         render(
             <Wrapper>
                 <Letter row={0} id={0} />
             </Wrapper>
         )
-        expect(store.getActions()).toStrictEqual([])
-        fireEvent.click(screen.getByText('A'))
-        expect(store.getActions()).toStrictEqual([
-            {
-                payload: { index: 0, letter: 'A', row: 0, valid: null },
-                type: SET_KNOWN_LETTER_VALIDITY,
-            },
-        ])
+        expect(screen.queryByTestId('letter-validity-selector')).toBeNull()
+        expect(screen.queryByTestId('remove-letter-icon')).toBeNull()
+        fireEvent.mouseEnter(screen.getByText('A'))
+        expect(
+            screen.getByTestId('letter-validity-selector')
+        ).toBeInTheDocument()
+        expect(screen.getByTestId('remove-letter-icon')).toBeInTheDocument()
     })
 
     it('Handles a keypress on a letter', async () => {
@@ -112,7 +107,7 @@ describe('components/letter', () => {
         ])
     })
 
-    it('Handles removing a letter', async () => {
+    it('Handles removing a letter by keypress', async () => {
         render(
             <Wrapper>
                 <Letter row={0} id={0} />
@@ -124,6 +119,23 @@ describe('components/letter', () => {
             code: 'Backspace',
             charCode: 9,
         })
+        expect(store.getActions()).toStrictEqual([
+            {
+                payload: { index: 0, letter: '', row: 0, valid: null },
+                type: REMOVE_KNOWN_LETTER,
+            },
+        ])
+    })
+
+    it('Handles removing a letter by trash icon', async () => {
+        render(
+            <Wrapper>
+                <Letter row={0} id={0} />
+            </Wrapper>
+        )
+        expect(store.getActions()).toStrictEqual([])
+        fireEvent.mouseEnter(screen.getByText('A'))
+        fireEvent.click(screen.getByTestId('remove-letter-icon'))
         expect(store.getActions()).toStrictEqual([
             {
                 payload: { index: 0, letter: '', row: 0, valid: null },
