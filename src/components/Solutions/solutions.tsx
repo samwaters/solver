@@ -6,6 +6,10 @@ import { getAllSolutions } from 'selectors/solutions.selectors'
 const SolutionsContainer = styled.div`
     margin: 10px 0 0 10px;
     width: 300px;
+    @media (max-width: 749px) {
+        margin: 10px auto 0 auto;
+        width: 415px;
+    }
 `
 
 const SolutionsTitle = styled.h1`

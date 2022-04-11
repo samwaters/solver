@@ -23,15 +23,15 @@ const Container = styled.div`
     flex-direction: column;
     margin: 0 auto;
     max-width: 1000px;
-    @media (max-width: 1000px) {
-        flex-direction: row;
-    }
 `
 
 const GameContainer = styled.div`
     display: flex;
     flex-direction: row;
     margin: 0 auto;
+    @media (max-width: 749px) {
+        flex-direction: column;
+    }
 `
 
 const LettersContainer = styled.div``
