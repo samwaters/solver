@@ -1,6 +1,8 @@
 import {
     ADD_KNOWN_LETTER,
     addKnownLetter,
+    FOCUS_LETTER,
+    focusLetter,
     removeKnownLetter,
     STORE_KNOWN_LETTER,
     storeKnownLetter,
@@ -14,6 +16,15 @@ describe('actions/letters.actions', () => {
                 valid: false,
             },
             type: ADD_KNOWN_LETTER,
+        })
+    })
+    it('Creates the FOCUS_LETTER action', () => {
+        expect(focusLetter(0, 1)).toStrictEqual({
+            type: FOCUS_LETTER,
+            payload: {
+                row: 0,
+                index: 1,
+            },
         })
     })
     it('Creates the REMOVE_KNOWN_LETTER action', () => {
