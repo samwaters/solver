@@ -1,26 +1,27 @@
 import { Action } from './action.interface'
 
 export const ADD_KNOWN_LETTER = 'ADD_KNOWN_LETTER'
-export const REMOVE_KNOWN_LETTER = 'REMOVE_KNOWN_LETTER'
-export const SET_KNOWN_LETTER_VALIDITY = 'SET_KNOWN_LETTER_VALIDITY'
+export const FOCUS_LETTER = 'FOCUS_LETTER'
+export const STORE_KNOWN_LETTER = 'STORE_KNOWN_LETTER'
 
-export const addKnownLetter = (
-    row: number,
-    index: number,
-    letter: string,
-    valid = false
-): Action => ({
-    type: ADD_KNOWN_LETTER,
+export const focusLetter = (row: number, index: number) => ({
+    type: FOCUS_LETTER,
     payload: {
         index,
-        letter,
         row,
+    },
+})
+
+export const addKnownLetter = (letter: string, valid?: boolean) => ({
+    type: ADD_KNOWN_LETTER,
+    payload: {
+        letter,
         valid,
     },
 })
 
 export const removeKnownLetter = (row: number, index: number): Action => ({
-    type: REMOVE_KNOWN_LETTER,
+    type: STORE_KNOWN_LETTER,
     payload: {
         index,
         letter: '',
@@ -29,17 +30,17 @@ export const removeKnownLetter = (row: number, index: number): Action => ({
     },
 })
 
-export const setKnownLetterValidity = (
+export const storeKnownLetter = (
     row: number,
     index: number,
     letter: string,
     valid: boolean
-): Action => ({
-    type: SET_KNOWN_LETTER_VALIDITY,
+) => ({
+    type: STORE_KNOWN_LETTER,
     payload: {
         index,
-        row,
         letter,
+        row,
         valid,
     },
 })

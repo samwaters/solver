@@ -1,19 +1,16 @@
 import {
     ADD_KNOWN_LETTER,
     addKnownLetter,
-    REMOVE_KNOWN_LETTER,
     removeKnownLetter,
-    SET_KNOWN_LETTER_VALIDITY,
-    setKnownLetterValidity,
+    STORE_KNOWN_LETTER,
+    storeKnownLetter,
 } from 'actions/letters.actions'
 
 describe('actions/letters.actions', () => {
     it('Creates the ADD_KNOWN_LETTER action', () => {
-        expect(addKnownLetter(0, 1, 'A', false)).toStrictEqual({
+        expect(addKnownLetter('A', false)).toStrictEqual({
             payload: {
-                index: 1,
                 letter: 'A',
-                row: 0,
                 valid: false,
             },
             type: ADD_KNOWN_LETTER,
@@ -27,18 +24,18 @@ describe('actions/letters.actions', () => {
                 row: 0,
                 valid: null,
             },
-            type: REMOVE_KNOWN_LETTER,
+            type: STORE_KNOWN_LETTER,
         })
     })
-    it('Creates the SET_KNOWN_LETTER_VALIDITY action', () => {
-        expect(setKnownLetterValidity(0, 1, 'A', true)).toStrictEqual({
+    it('Creates the STORE_KNOWN_LETTER action', () => {
+        expect(storeKnownLetter(0, 1, 'A', true)).toStrictEqual({
             payload: {
                 index: 1,
                 letter: 'A',
                 row: 0,
                 valid: true,
             },
-            type: SET_KNOWN_LETTER_VALIDITY,
+            type: STORE_KNOWN_LETTER,
         })
     })
 })

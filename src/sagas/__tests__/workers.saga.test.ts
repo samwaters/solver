@@ -3,11 +3,7 @@ import { workersSaga } from 'sagas/workers.saga'
 import { RESET } from 'actions/reset.actions'
 import { select } from '@redux-saga/core/effects'
 import { getAllWorkers } from 'selectors/workers.selectors'
-import {
-    ADD_KNOWN_LETTER,
-    REMOVE_KNOWN_LETTER,
-    SET_KNOWN_LETTER_VALIDITY,
-} from 'actions/letters.actions'
+import { STORE_KNOWN_LETTER } from 'actions/letters.actions'
 import { INITIALISE_WORKER, REGISTER_WORKER } from 'actions/workers.actions'
 
 jest.mock('../../store', () => ({
@@ -51,7 +47,7 @@ describe('sagas/workers', () => {
             .provide([[select(getAllWorkers), { test: new Worker('/foo') }]])
             .dispatch({
                 payload: { index: 0, letter: 'A', row: 0, valid: true },
-                type: ADD_KNOWN_LETTER,
+                type: STORE_KNOWN_LETTER,
             })
             .run()
             .then(() => {
@@ -99,7 +95,7 @@ describe('sagas/workers', () => {
             .provide([[select(getAllWorkers), { test: new Worker('/foo') }]])
             .dispatch({
                 payload: { index: 0, letter: '', row: 0, valid: null },
-                type: REMOVE_KNOWN_LETTER,
+                type: STORE_KNOWN_LETTER,
             })
             .run()
             .then(() => {
@@ -128,7 +124,7 @@ describe('sagas/workers', () => {
             .provide([[select(getAllWorkers), { test: new Worker('/foo') }]])
             .dispatch({
                 payload: { index: 0, letter: 'A', row: 0, valid: false },
-                type: SET_KNOWN_LETTER_VALIDITY,
+                type: STORE_KNOWN_LETTER,
             })
             .run()
             .then(() => {

@@ -1,5 +1,9 @@
 import { AppState } from 'reducers/index'
-import { getLetterById } from 'selectors/letters.selectors'
+import {
+    getFocussedLetter,
+    getLetterById,
+    isLetterFocussed,
+} from 'selectors/letters.selectors'
 
 describe('selectors/letters.selectors', () => {
     const appState: AppState = {
@@ -8,6 +12,10 @@ describe('selectors/letters.selectors', () => {
             ready: false,
         },
         letters: {
+            focus: {
+                index: 1,
+                row: 2,
+            },
             knownLetters: {
                 0: {
                     0: { letter: 'B', valid: true },
@@ -27,5 +35,15 @@ describe('selectors/letters.selectors', () => {
             letter: 'B',
             valid: true,
         })
+    })
+    it('Should get the focussed letter', () => {
+        expect(getFocussedLetter(appState)).toStrictEqual({
+            index: 1,
+            row: 2,
+        })
+    })
+    it('Should check if a letter is focussed', () => {
+        expect(isLetterFocussed(2, 1)(appState)).toBeTruthy()
+        expect(isLetterFocussed(1, 2)(appState)).toBeFalsy()
     })
 })

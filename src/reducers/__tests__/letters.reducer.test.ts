@@ -1,57 +1,45 @@
 import { lettersReducer, LettersState } from 'reducers/letters.reducer'
 import {
-    addKnownLetter,
+    focusLetter,
     removeKnownLetter,
-    setKnownLetterValidity,
+    storeKnownLetter,
 } from 'actions/letters.actions'
 import { reset } from 'actions/reset.actions'
 
 describe('reducers/letters.reducer', () => {
-    it('Handles the ADD_KNOWN_LETTER action', () => {
-        const newStateInvalid: LettersState = lettersReducer(
+    it('Handles the FOCUS_LETTER action', () => {
+        const newState: LettersState = lettersReducer(
             undefined,
-            addKnownLetter(0, 0, 'A')
+            focusLetter(2, 1)
         )
-        expect(newStateInvalid.knownLetters[0][0]).toStrictEqual({
-            letter: 'A',
-            valid: false,
-        })
-        const newStateValid: LettersState = lettersReducer(
-            undefined,
-            addKnownLetter(0, 1, 'B', true)
-        )
-        expect(newStateValid.knownLetters[0][1]).toStrictEqual({
-            letter: 'B',
-            valid: true,
+        expect(newState.focus).toStrictEqual({
+            index: 1,
+            row: 2,
         })
     })
     it('Handles the REMOVE_KNOWN_LETTER action', () => {
         // Add the known letter
         let newState: LettersState = lettersReducer(
             undefined,
-            addKnownLetter(0, 0, 'A')
+            storeKnownLetter(0, 1, 'A', false)
         )
-        expect(newState.knownLetters[0][0]).toStrictEqual({
+        expect(newState.knownLetters[0][1]).toStrictEqual({
             letter: 'A',
             valid: false,
         })
         // Now remove it
-        newState = lettersReducer(newState, removeKnownLetter(0, 0))
+        newState = lettersReducer(newState, removeKnownLetter(0, 1))
         expect(newState.knownLetters[0][0]).toStrictEqual({
             letter: '',
             valid: null,
         })
     })
     it('Handles RESET', () => {
-        // Add the known letter
+        // Add a known letter
         let newState: LettersState = lettersReducer(
             undefined,
-            addKnownLetter(0, 0, 'A')
+            storeKnownLetter(0, 0, 'A', false)
         )
-        expect(newState.knownLetters[0][0]).toStrictEqual({
-            letter: 'A',
-            valid: false,
-        })
         // Now remove it
         newState = lettersReducer(newState, reset())
         expect(newState.knownLetters[0][0]).toStrictEqual({
@@ -59,20 +47,17 @@ describe('reducers/letters.reducer', () => {
             valid: null,
         })
     })
-    it('Handles the SET_KNOWN_LETTER_VISIBILITY action', () => {
+    it('Handles the STORE_KNOWN_LETTER action', () => {
         // Add the known letter
         let newState: LettersState = lettersReducer(
             undefined,
-            addKnownLetter(0, 0, 'A')
+            storeKnownLetter(0, 0, 'A', false)
         )
         expect(newState.knownLetters[0][0]).toStrictEqual({
             letter: 'A',
             valid: false,
         })
-        newState = lettersReducer(
-            newState,
-            setKnownLetterValidity(0, 0, 'A', true)
-        )
+        newState = lettersReducer(newState, storeKnownLetter(0, 0, 'A', true))
         expect(newState.knownLetters[0][0]).toStrictEqual({
             letter: 'A',
             valid: true,

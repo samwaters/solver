@@ -6,11 +6,7 @@ import { RESET } from 'actions/reset.actions'
 import { addSolutions } from 'actions/solutions.actions'
 import { getWordsStartingWith } from 'selectors/words.selectors'
 import { getAllWorkers } from 'selectors/workers.selectors'
-import {
-    ADD_KNOWN_LETTER,
-    REMOVE_KNOWN_LETTER,
-    SET_KNOWN_LETTER_VALIDITY,
-} from 'actions/letters.actions'
+import { STORE_KNOWN_LETTER } from 'actions/letters.actions'
 import { store } from '../store'
 
 function* initialise(params: Action) {
@@ -70,9 +66,7 @@ function* updateWorkers(params: Action) {
 }
 
 export function* workersSaga() {
-    yield takeEvery(ADD_KNOWN_LETTER, updateWorkers)
     yield takeEvery(INITIALISE_WORKER, initialise)
-    yield takeEvery(REMOVE_KNOWN_LETTER, updateWorkers)
     yield takeEvery(RESET, reset)
-    yield takeEvery(SET_KNOWN_LETTER_VALIDITY, updateWorkers)
+    yield takeEvery(STORE_KNOWN_LETTER, updateWorkers)
 }

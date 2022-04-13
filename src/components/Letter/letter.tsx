@@ -1,13 +1,13 @@
 import * as React from 'react'
-import { KeyboardEvent, useState } from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
-import { getLetterById } from 'selectors/letters.selectors'
-import { addKnownLetter, removeKnownLetter } from 'actions/letters.actions'
+import { getLetterById, isLetterFocussed } from 'selectors/letters.selectors'
+import { focusLetter, removeKnownLetter } from 'actions/letters.actions'
 import { Icon, IconColors, Icons } from 'components/Icons/icon'
 import { LetterValiditySelector } from 'components/Letter/lettervalidityselector'
 
-const LetterContainer = styled.div<{ isValid: boolean }>`
+const LetterContainer = styled.div<{ isFocussed: boolean; isValid: boolean }>`
     align-items: center;
     background-color: ${(props) =>
         props.isValid === null
@@ -15,12 +15,14 @@ const LetterContainer = styled.div<{ isValid: boolean }>`
             : props.isValid
             ? props.theme.letter.valid
             : props.theme.letter.invalid};
-    border: 2px solid transparent;
+    border: ${(props) =>
+        props.isFocussed ? '2px solid orange' : '2px solid transparent'};
     border-radius: 5px;
     color: ${(props) => props.theme.letter.color};
     display: flex;
     height: 75px;
     justify-content: center;
+    outline: 0;
     position: relative;
     width: 75px;
     :focus {
@@ -43,44 +45,39 @@ const RemoveLetterIcon = styled.div`
     width: 16px;
 `
 
-export const Letter = ({ id, row, ...rest }: { id: number; row: number }) => {
+export const Letter = ({
+    index,
+    row,
+    ...rest
+}: {
+    index: number
+    row: number
+}) => {
     const dispatch = useDispatch()
-    const letter = useSelector(getLetterById(row, id))
+    const isFocussed = useSelector(isLetterFocussed(row, index))
+    const letter = useSelector(getLetterById(row, index))
     const [isHovering, setIsHovering] = useState(false)
 
-    const handleKeyPress = (event: KeyboardEvent<HTMLDivElement>) => {
-        event.preventDefault()
-        event.stopPropagation()
-        if (/[A-Z]/i.test(event.key)) {
-            dispatch(
-                addKnownLetter(
-                    row,
-                    id,
-                    event.key.toUpperCase(),
-                    letter.valid ?? null
-                )
-            )
-        }
+    const handleClick = () => {
+        dispatch(focusLetter(row, index))
     }
-    const handleKeyUp = (event: KeyboardEvent<HTMLDivElement>) => {
-        if (event.code === 'Backspace') {
-            dispatch(removeKnownLetter(row, id))
-        }
-    }
+
     return (
         <LetterContainer
+            isFocussed={isFocussed}
             isValid={letter.valid}
-            onKeyPress={handleKeyPress}
-            onKeyUp={handleKeyUp}
+            onClick={handleClick}
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
-            tabIndex={0}
             {...rest}
         >
             {isHovering && letter.letter && (
                 <RemoveLetterIcon
                     data-testid="remove-letter-icon"
-                    onClick={() => dispatch(removeKnownLetter(row, id))}
+                    onClick={(e) => {
+                        e.stopPropagation()
+                        dispatch(removeKnownLetter(row, index))
+                    }}
                 >
                     <Icon
                         color={IconColors.WHITE}
@@ -92,7 +89,7 @@ export const Letter = ({ id, row, ...rest }: { id: number; row: number }) => {
             )}
             {isHovering && letter.letter && (
                 <LetterValiditySelector
-                    index={id}
+                    index={index}
                     letter={letter.letter}
                     row={row}
                 />

@@ -12,10 +12,10 @@ const Container = styled.div`
 
 export const KnownLetters = ({ row }: { row: number }) => (
     <Container data-testid="knownletters-container">
-        <Letter id={0} row={row} />
-        <Letter id={1} row={row} />
-        <Letter id={2} row={row} />
-        <Letter id={3} row={row} />
-        <Letter id={4} row={row} />
+        <Letter index={0} row={row} />
+        <Letter index={1} row={row} />
+        <Letter index={2} row={row} />
+        <Letter index={3} row={row} />
+        <Letter index={4} row={row} />
     </Container>
 )

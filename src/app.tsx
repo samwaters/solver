@@ -1,7 +1,8 @@
 import * as React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import styled, { createGlobalStyle, ThemeProvider } from 'styled-components'
 import { Reset } from 'styled-reset'
+import { addKnownLetter } from 'actions/letters.actions'
 import { ErrorBoundary } from 'components/ErrorBoundary/errorboundary'
 import { Header } from 'components/Header/header'
 import { KnownLetters } from 'components/KnownLetters/knownletters'
@@ -37,7 +38,18 @@ const GameContainer = styled.div`
 const LettersContainer = styled.div``
 
 export const App = () => {
+    const dispatch = useDispatch()
+
+    const handleKeyUp = (event: KeyboardEvent) => {
+        if (/^[A-Z]$/i.test(event.key)) {
+            dispatch(addKnownLetter(event.key.toUpperCase()))
+        }
+        if (event.code === 'Backspace') {
+            dispatch(addKnownLetter('', null))
+        }
+    }
     const ready = useSelector(isReady)
+    document.body.addEventListener('keyup', handleKeyUp)
     return (
         <ThemeProvider theme={theme}>
             <Reset />

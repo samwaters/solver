@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import { ThemeProvider } from 'styled-components'
 import { fireEvent, render, screen } from '@testing-library/react'
 
-import { ADD_KNOWN_LETTER, REMOVE_KNOWN_LETTER } from 'actions/letters.actions'
+import { STORE_KNOWN_LETTER } from 'actions/letters.actions'
 import { Letter } from 'components/Letter/letter'
 import { theme } from 'theme/theme'
 import { getStore } from 'utils/test.utils'
@@ -24,7 +24,7 @@ describe('components/letter', () => {
     it('Renders a valid letter', () => {
         render(
             <Wrapper>
-                <Letter data-testid="Letter0" row={0} id={0} />
+                <Letter data-testid="Letter0" row={0} index={0} />
             </Wrapper>
         )
         expect(screen.getByTestId('Letter0')).toHaveTextContent('A')
@@ -37,7 +37,7 @@ describe('components/letter', () => {
     it('Renders a known letter in the wrong place', () => {
         render(
             <Wrapper>
-                <Letter data-testid="Letter1" row={0} id={1} />
+                <Letter data-testid="Letter1" row={0} index={1} />
             </Wrapper>
         )
         expect(screen.getByTestId('Letter1')).toHaveTextContent('B')
@@ -50,7 +50,7 @@ describe('components/letter', () => {
     it('Renders an invalid letter', () => {
         render(
             <Wrapper>
-                <Letter data-testid="Letter2" row={0} id={2} />
+                <Letter data-testid="Letter2" row={0} index={2} />
             </Wrapper>
         )
         expect(screen.getByTestId('Letter2')).toHaveTextContent('C')
@@ -63,7 +63,7 @@ describe('components/letter', () => {
     it('Renders an empty letter', () => {
         render(
             <Wrapper>
-                <Letter data-testid="Letter3" row={0} id={3} />
+                <Letter data-testid="Letter3" row={0} index={3} />
             </Wrapper>
         )
         expect(screen.getByTestId('Letter3')).toHaveTextContent('')
@@ -75,7 +75,7 @@ describe('components/letter', () => {
     it('Shows the trash icon and validity selector on mouse over', () => {
         render(
             <Wrapper>
-                <Letter row={0} id={0} />
+                <Letter row={0} index={0} />
             </Wrapper>
         )
         expect(screen.queryByTestId('letter-validity-selector')).toBeNull()
@@ -87,50 +87,10 @@ describe('components/letter', () => {
         expect(screen.getByTestId('remove-letter-icon')).toBeInTheDocument()
     })
 
-    it('Handles a keypress on a letter', async () => {
-        render(
-            <Wrapper>
-                <Letter row={0} id={0} />
-            </Wrapper>
-        )
-        expect(store.getActions()).toStrictEqual([])
-        fireEvent.keyPress(screen.getByText('A'), {
-            key: 'B',
-            code: 'KeyB',
-            charCode: 66,
-        })
-        expect(store.getActions()).toStrictEqual([
-            {
-                payload: { index: 0, letter: 'B', row: 0, valid: true },
-                type: ADD_KNOWN_LETTER,
-            },
-        ])
-    })
-
-    it('Handles removing a letter by keypress', async () => {
-        render(
-            <Wrapper>
-                <Letter row={0} id={0} />
-            </Wrapper>
-        )
-        expect(store.getActions()).toStrictEqual([])
-        fireEvent.keyUp(screen.getByText('A'), {
-            key: 'Backspace',
-            code: 'Backspace',
-            charCode: 9,
-        })
-        expect(store.getActions()).toStrictEqual([
-            {
-                payload: { index: 0, letter: '', row: 0, valid: null },
-                type: REMOVE_KNOWN_LETTER,
-            },
-        ])
-    })
-
     it('Handles removing a letter by trash icon', async () => {
         render(
             <Wrapper>
-                <Letter row={0} id={0} />
+                <Letter row={0} index={0} />
             </Wrapper>
         )
         expect(store.getActions()).toStrictEqual([])
@@ -139,7 +99,7 @@ describe('components/letter', () => {
         expect(store.getActions()).toStrictEqual([
             {
                 payload: { index: 0, letter: '', row: 0, valid: null },
-                type: REMOVE_KNOWN_LETTER,
+                type: STORE_KNOWN_LETTER,
             },
         ])
     })

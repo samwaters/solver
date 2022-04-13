@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
-import { setKnownLetterValidity } from 'actions/letters.actions'
+import { storeKnownLetter } from 'actions/letters.actions'
 
 const Container = styled.div`
     align-items: center;
@@ -48,19 +48,19 @@ export const LetterValiditySelector = ({
             <Validity
                 isValid={null}
                 onClick={() =>
-                    dispatch(setKnownLetterValidity(row, index, letter, null))
+                    dispatch(storeKnownLetter(row, index, letter, null))
                 }
             />
             <Validity
                 isValid={false}
                 onClick={() =>
-                    dispatch(setKnownLetterValidity(row, index, letter, false))
+                    dispatch(storeKnownLetter(row, index, letter, false))
                 }
             />
             <Validity
                 isValid={true}
                 onClick={() =>
-                    dispatch(setKnownLetterValidity(row, index, letter, true))
+                    dispatch(storeKnownLetter(row, index, letter, true))
                 }
             />
         </Container>

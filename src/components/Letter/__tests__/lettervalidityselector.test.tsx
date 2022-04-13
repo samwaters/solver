@@ -6,7 +6,7 @@ import { fireEvent, render, screen } from '@testing-library/react'
 import { LetterValiditySelector } from 'components/Letter/lettervalidityselector'
 import { theme } from 'theme/theme'
 import { getStore } from 'utils/test.utils'
-import { SET_KNOWN_LETTER_VALIDITY } from 'actions/letters.actions'
+import { STORE_KNOWN_LETTER } from 'actions/letters.actions'
 
 describe('components/letter/lettervalidityselector', () => {
     const store = getStore()
@@ -45,7 +45,7 @@ describe('components/letter/lettervalidityselector', () => {
                     row: 1,
                     valid: null,
                 },
-                type: SET_KNOWN_LETTER_VALIDITY,
+                type: STORE_KNOWN_LETTER,
             },
         ])
         store.clearActions()
@@ -59,7 +59,7 @@ describe('components/letter/lettervalidityselector', () => {
                     row: 1,
                     valid: false,
                 },
-                type: SET_KNOWN_LETTER_VALIDITY,
+                type: STORE_KNOWN_LETTER,
             },
         ])
         store.clearActions()
@@ -73,7 +73,7 @@ describe('components/letter/lettervalidityselector', () => {
                     row: 1,
                     valid: true,
                 },
-                type: SET_KNOWN_LETTER_VALIDITY,
+                type: STORE_KNOWN_LETTER,
             },
         ])
     })

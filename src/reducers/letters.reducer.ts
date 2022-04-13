@@ -1,12 +1,12 @@
 import { Action } from 'actions/action.interface'
-import {
-    ADD_KNOWN_LETTER,
-    REMOVE_KNOWN_LETTER,
-    SET_KNOWN_LETTER_VALIDITY,
-} from 'actions/letters.actions'
+import { FOCUS_LETTER, STORE_KNOWN_LETTER } from 'actions/letters.actions'
 import { RESET } from 'actions/reset.actions'
 
 export interface LettersState {
+    focus: {
+        index: number
+        row: number
+    }
     knownLetters: {
         [row: number]: {
             [id: number]: {
@@ -18,6 +18,10 @@ export interface LettersState {
 }
 
 const initialState: LettersState = {
+    focus: {
+        index: -1,
+        row: -1,
+    },
     knownLetters: {
         0: {
             0: { letter: '', valid: null },
@@ -62,7 +66,16 @@ export const lettersReducer = (
     action: Action
 ): LettersState => {
     switch (action.type) {
-        case ADD_KNOWN_LETTER:
+        case FOCUS_LETTER:
+            return {
+                ...state,
+                focus: {
+                    ...action.payload,
+                },
+            }
+        case RESET:
+            return initialState
+        case STORE_KNOWN_LETTER:
             return {
                 ...state,
                 knownLetters: {
@@ -71,35 +84,6 @@ export const lettersReducer = (
                         ...state.knownLetters[action.payload.row],
                         [action.payload.index]: {
                             letter: action.payload.letter,
-                            valid: action.payload.valid,
-                        },
-                    },
-                },
-            }
-        case REMOVE_KNOWN_LETTER:
-            return {
-                ...state,
-                knownLetters: {
-                    ...state.knownLetters,
-                    [action.payload.row]: {
-                        ...state.knownLetters[action.payload.row],
-                        [action.payload.index]: { letter: '', valid: null },
-                    },
-                },
-            }
-        case RESET:
-            return initialState
-        case SET_KNOWN_LETTER_VALIDITY:
-            return {
-                ...state,
-                knownLetters: {
-                    ...state.knownLetters,
-                    [action.payload.row]: {
-                        ...state.knownLetters[action.payload.row],
-                        [action.payload.index]: {
-                            ...state.knownLetters[action.payload.row][
-                                action.payload.index
-                            ],
                             valid: action.payload.valid,
                         },
                     },

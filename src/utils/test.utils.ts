@@ -9,6 +9,10 @@ const mockStoreState: AppState = {
         ready: true,
     },
     letters: {
+        focus: {
+            index: -1,
+            row: -1,
+        },
         knownLetters: {
             0: {
                 0: { letter: 'A', valid: true },
