@@ -49,7 +49,7 @@ export const App = () => {
         }
     }
     const ready = useSelector(isReady)
-    document.body.addEventListener('keyup', handleKeyUp)
+    document.body.onkeyup = handleKeyUp
     return (
         <ThemeProvider theme={theme}>
             <Reset />

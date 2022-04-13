@@ -1,20 +1,20 @@
 /// globals mode
 import 'babel-polyfill'
 import * as React from 'react'
-import { render } from 'react-dom'
 // Router
+import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
-
 // Components
 import { App } from './app'
 import { sagaMiddleware, store } from './store'
 import { rootSaga } from 'sagas/index'
 
-render(
+const root = createRoot(document.getElementById('app'))
+
+root.render(
     <Provider store={store}>
         <App />
-    </Provider>,
-    document.getElementById('app')
+    </Provider>
 )
 
 sagaMiddleware.run(rootSaga)
