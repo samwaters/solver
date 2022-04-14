@@ -2,7 +2,7 @@ import * as React from 'react'
 import { ReactNode } from 'react'
 import { Provider } from 'react-redux'
 import { ThemeProvider } from 'styled-components'
-import { fireEvent, render, screen } from '@testing-library/react'
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 
 import { STORE_KNOWN_LETTER } from 'actions/letters.actions'
 import { Letter } from 'components/Letter/letter'
@@ -73,14 +73,18 @@ describe('components/letter', () => {
     })
 
     it('Shows the trash icon and validity selector on mouse over', () => {
-        render(
-            <Wrapper>
-                <Letter row={0} index={0} />
-            </Wrapper>
-        )
+        act(() => {
+            render(
+                <Wrapper>
+                    <Letter row={0} index={0} />
+                </Wrapper>
+            )
+        })
         expect(screen.queryByTestId('letter-validity-selector')).toBeNull()
         expect(screen.queryByTestId('remove-letter-icon')).toBeNull()
-        fireEvent.mouseEnter(screen.getByText('A'))
+        act(() => {
+            fireEvent.mouseEnter(screen.getByText('A'))
+        })
         expect(
             screen.getByTestId('letter-validity-selector')
         ).toBeInTheDocument()
@@ -88,14 +92,23 @@ describe('components/letter', () => {
     })
 
     it('Handles removing a letter by trash icon', async () => {
-        render(
-            <Wrapper>
-                <Letter row={0} index={0} />
-            </Wrapper>
-        )
+        act(() => {
+            render(
+                <Wrapper>
+                    <Letter row={0} index={0} />
+                </Wrapper>
+            )
+        })
         expect(store.getActions()).toStrictEqual([])
-        fireEvent.mouseEnter(screen.getByText('A'))
-        fireEvent.click(screen.getByTestId('remove-letter-icon'))
+        act(() => {
+            fireEvent.mouseEnter(screen.getByText('A'))
+        })
+        await waitFor(() =>
+            expect(screen.getByTestId('remove-letter-icon')).toBeInTheDocument()
+        )
+        act(() => {
+            fireEvent.click(screen.getByTestId('remove-letter-icon'))
+        })
         expect(store.getActions()).toStrictEqual([
             {
                 payload: { index: 0, letter: '', row: 0, valid: null },
