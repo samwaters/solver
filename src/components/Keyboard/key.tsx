@@ -10,9 +10,10 @@ const KeyContainer = styled.div`
     align-items: center;
     background-color: ${(props) => props.theme.header.background};
     border-radius: 5px;
+    color: white;
     cursor: pointer;
     display: flex;
-    height: 30px;
+    height: 40px;
     justify-content: center;
     width: 30px;
 `

@@ -17,7 +17,7 @@ const Container = styled.div<{
     @media (max-height: 599px) {
         background-color: rgba(0, 0, 0, 0.5);
         bottom: 0;
-        position: absolute;
+        position: sticky;
     }
     @media (max-width: 999px) {
         width: 100%;
@@ -26,10 +26,10 @@ const Container = styled.div<{
 
 const KeyRow = styled.div<{ keyCount: number }>`
     display: grid;
-    gap: 5px;
+    gap: 10px;
     grid-template-columns: ${(props) => `repeat(${props.keyCount}, 1fr)`};
-    margin: 0 auto;
-    width: ${(props) => `${props.keyCount * 30 + (props.keyCount - 1) * 5}px`};
+    margin: 10px auto 0 auto;
+    width: ${(props) => `${props.keyCount * 30 + (props.keyCount - 1) * 10}px`};
 `
 
 const KeySpacer = styled.div``
