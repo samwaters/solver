@@ -4,7 +4,9 @@ export const getFocussedLetter = (state: AppState) => state.letters.focus
 
 export const getLetterById =
     (row: number, index: number) => (state: AppState) =>
-        state.letters.knownLetters[row][index]
+        state.letters.knownLetters[row]
+            ? state.letters.knownLetters[row][index]
+            : null
 
 export const isLetterFocussed =
     (row: number, index: number) => (state: AppState) =>

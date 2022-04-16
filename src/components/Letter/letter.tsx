@@ -1,10 +1,10 @@
 import * as React from 'react'
-import { useState } from 'react'
+import { MouseEvent, useState } from 'react'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { getLetterById, isLetterFocussed } from 'selectors/letters.selectors'
 import { focusLetter, removeKnownLetter } from 'actions/letters.actions'
-import { Icon, IconColors, Icons } from 'components/Icons/icon'
+import { Icon, Icons } from 'components/Icons/icon'
 import { LetterValiditySelector } from 'components/Letter/lettervalidityselector'
 
 const LetterContainer = styled.div<{ isFocussed: boolean; isValid: boolean }>`
@@ -58,7 +58,8 @@ export const Letter = ({
     const letter = useSelector(getLetterById(row, index))
     const [isHovering, setIsHovering] = useState(false)
 
-    const handleClick = () => {
+    const handleClick = (e: MouseEvent<HTMLDivElement>) => {
+        e.stopPropagation()
         dispatch(focusLetter(row, index))
     }
 
@@ -79,12 +80,7 @@ export const Letter = ({
                         dispatch(removeKnownLetter(row, index))
                     }}
                 >
-                    <Icon
-                        color={IconColors.WHITE}
-                        height={16}
-                        icon={Icons.TRASH}
-                        width={16}
-                    />
+                    <Icon height={16} icon={Icons.TRASH} width={16} />
                 </RemoveLetterIcon>
             )}
             {isHovering && letter.letter && (

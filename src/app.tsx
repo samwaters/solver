@@ -2,7 +2,7 @@ import * as React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled, { createGlobalStyle, ThemeProvider } from 'styled-components'
 import { Reset } from 'styled-reset'
-import { addKnownLetter } from 'actions/letters.actions'
+import { addKnownLetter, focusLetter } from 'actions/letters.actions'
 import { ErrorBoundary } from 'components/ErrorBoundary/errorboundary'
 import { Header } from 'components/Header/header'
 import { KnownLetters } from 'components/KnownLetters/knownletters'
@@ -10,6 +10,7 @@ import { Loading } from 'components/Loading/loading'
 import { Solutions } from 'components/Solutions/solutions'
 import { isReady } from 'selectors/bootstrap.selectors'
 import { Theme, theme } from 'theme/theme'
+import { Keyboard } from 'components/Keyboard/keyboard'
 
 const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
   * { box-sizing: border-box; }
@@ -40,6 +41,9 @@ const LettersContainer = styled.div``
 export const App = () => {
     const dispatch = useDispatch()
 
+    const handleClick = () => {
+        dispatch(focusLetter(-1, -1))
+    }
     const handleKeyUp = (event: KeyboardEvent) => {
         if (/^[A-Z]$/i.test(event.key)) {
             dispatch(addKnownLetter(event.key.toUpperCase()))
@@ -49,6 +53,7 @@ export const App = () => {
         }
     }
     const ready = useSelector(isReady)
+    document.body.onclick = handleClick
     document.body.onkeyup = handleKeyUp
     return (
         <ThemeProvider theme={theme}>
@@ -69,6 +74,7 @@ export const App = () => {
                             </LettersContainer>
                             <Solutions />
                         </GameContainer>
+                        <Keyboard />
                     </Container>
                 )}
             </ErrorBoundary>
