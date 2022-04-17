@@ -1,31 +1,20 @@
 import * as React from 'react'
-import { ReactNode } from 'react'
-import { Provider } from 'react-redux'
-import { ThemeProvider } from 'styled-components'
 import { fireEvent, render, screen } from '@testing-library/react'
-
 import { RESET } from 'actions/reset.actions'
 import { Header } from 'components/Header/header'
 import { theme } from 'theme/theme'
-import { getStore } from 'utils/test.utils'
+import { testStore, TestWrapper } from 'utils/test.utils'
 
 describe('components/header', () => {
-    const store = getStore()
-    const Wrapper = ({ children }: { children: ReactNode | ReactNode[] }) => (
-        <Provider store={store}>
-            <ThemeProvider theme={theme}>{children}</ThemeProvider>
-        </Provider>
-    )
-
     beforeEach(() => {
-        store.clearActions()
+        testStore.clearActions()
     })
 
     it('Renders the header', () => {
         render(
-            <Wrapper>
+            <TestWrapper>
                 <Header />
-            </Wrapper>
+            </TestWrapper>
         )
         expect(screen.getByTestId('header-container')).toBeInTheDocument()
         expect(screen.getByTestId('header-text')).toBeInTheDocument()
@@ -50,13 +39,13 @@ describe('components/header', () => {
 
     it('Dispatches the reset action', () => {
         render(
-            <Wrapper>
+            <TestWrapper>
                 <Header />
-            </Wrapper>
+            </TestWrapper>
         )
-        expect(store.getActions()).toStrictEqual([])
+        expect(testStore.getActions()).toStrictEqual([])
         fireEvent.click(screen.getByTestId('header-button'))
-        expect(store.getActions()).toStrictEqual([
+        expect(testStore.getActions()).toStrictEqual([
             {
                 type: RESET,
             },

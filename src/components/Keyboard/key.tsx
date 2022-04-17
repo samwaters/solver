@@ -33,7 +33,7 @@ export interface KeyProps {
     letter: string
 }
 
-export const Key = ({ letter }: KeyProps) => {
+export const Key = ({ letter, ...rest }: KeyProps) => {
     const dispatch = useDispatch()
     const focussedLetter = useSelector(getFocussedLetter)
     const letterData = useSelector(
@@ -62,7 +62,7 @@ export const Key = ({ letter }: KeyProps) => {
         }
     }
     return (
-        <KeyContainer onClick={handleClick}>
+        <KeyContainer onClick={handleClick} {...rest}>
             {letter.length === 1 ? letter : null}
             {letter === 'DEL' && (
                 <Icon height={20} icon={Icons.BACKSPACE} width={20} />

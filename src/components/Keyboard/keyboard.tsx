@@ -32,11 +32,9 @@ const KeyRow = styled.div<{ keyCount: number }>`
     width: ${(props) => `${props.keyCount * 30 + (props.keyCount - 1) * 10}px`};
 `
 
-const KeySpacer = styled.div``
-
 export const Keyboard = () => {
-    const [visible, setVisible] = useState(false)
     const focusedLetter = useSelector(getFocussedLetter)
+    const [visible, setVisible] = useState(focusedLetter.row > -1)
     useEffect(() => {
         setVisible(focusedLetter.row > -1)
     }, [focusedLetter])
@@ -51,16 +49,13 @@ export const Keyboard = () => {
         <Transition in={visible} timeout={250}>
             {(state) => (
                 <Container state={state}>
+                    {state}
                     {state !== 'exited' &&
                         rowMap.map((row, index) => (
                             <KeyRow key={index} keyCount={row.length}>
-                                {rowMap[index].map((letter) =>
-                                    letter !== '' ? (
-                                        <Key key={letter} letter={letter} />
-                                    ) : (
-                                        <KeySpacer />
-                                    )
-                                )}
+                                {rowMap[index].map((letter) => (
+                                    <Key key={letter} letter={letter} />
+                                ))}
                             </KeyRow>
                         ))}
                 </Container>

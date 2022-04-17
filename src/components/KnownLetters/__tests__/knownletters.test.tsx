@@ -1,24 +1,15 @@
 import * as React from 'react'
-import { ReactNode } from 'react'
-import { Provider } from 'react-redux'
-import { ThemeProvider } from 'styled-components'
 import { KnownLetters } from 'components/KnownLetters/knownletters'
 import { theme } from 'theme/theme'
-import { getStore } from 'utils/test.utils'
+import { TestWrapper } from 'utils/test.utils'
 import { render, screen } from '@testing-library/react'
 
 describe('components/knownletters', () => {
-    const store = getStore()
-    const Wrapper = ({ children }: { children: ReactNode | ReactNode[] }) => (
-        <Provider store={store}>
-            <ThemeProvider theme={theme}>{children}</ThemeProvider>
-        </Provider>
-    )
     it('Renders the known letters', () => {
         render(
-            <Wrapper>
+            <TestWrapper>
                 <KnownLetters row={0} />
-            </Wrapper>
+            </TestWrapper>
         )
         expect(screen.getByTestId('knownletters-container')).toBeInTheDocument()
         expect(screen.getByTestId('knownletters-container')).toHaveStyle(`

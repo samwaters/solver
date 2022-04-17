@@ -1,30 +1,14 @@
 import * as React from 'react'
-import { ReactNode } from 'react'
-import { Provider } from 'react-redux'
-import { ThemeProvider } from 'styled-components'
 import { render, screen } from '@testing-library/react'
-
-import { theme } from 'theme/theme'
-import { getStore } from 'utils/test.utils'
+import { TestWrapper } from 'utils/test.utils'
 import { Solutions } from 'components/Solutions/solutions'
 
 describe('components/solutions', () => {
-    const store = getStore()
-    const Wrapper = ({ children }: { children: ReactNode | ReactNode[] }) => (
-        <Provider store={store}>
-            <ThemeProvider theme={theme}>{children}</ThemeProvider>
-        </Provider>
-    )
-
-    beforeEach(() => {
-        store.clearActions()
-    })
-
     it('Renders the solutions', () => {
         render(
-            <Wrapper>
+            <TestWrapper>
                 <Solutions />
-            </Wrapper>
+            </TestWrapper>
         )
         expect(screen.getByTestId('solutions-container')).toBeInTheDocument()
         expect(screen.getByTestId('solutions-title')).toBeInTheDocument()

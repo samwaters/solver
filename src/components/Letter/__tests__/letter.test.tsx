@@ -1,31 +1,20 @@
 import * as React from 'react'
-import { ReactNode } from 'react'
-import { Provider } from 'react-redux'
-import { ThemeProvider } from 'styled-components'
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
-
 import { STORE_KNOWN_LETTER } from 'actions/letters.actions'
 import { Letter } from 'components/Letter/letter'
 import { theme } from 'theme/theme'
-import { getStore } from 'utils/test.utils'
+import { testStore, TestWrapper } from 'utils/test.utils'
 
 describe('components/letter', () => {
-    const store = getStore()
-    const Wrapper = ({ children }: { children: ReactNode | ReactNode[] }) => (
-        <Provider store={store}>
-            <ThemeProvider theme={theme}>{children}</ThemeProvider>
-        </Provider>
-    )
-
     beforeEach(() => {
-        store.clearActions()
+        testStore.clearActions()
     })
 
     it('Renders a valid letter', () => {
         render(
-            <Wrapper>
+            <TestWrapper>
                 <Letter data-testid="Letter0" row={0} index={0} />
-            </Wrapper>
+            </TestWrapper>
         )
         expect(screen.getByTestId('Letter0')).toHaveTextContent('A')
         expect(screen.getByTestId('Letter0')).toHaveStyle(
@@ -36,9 +25,9 @@ describe('components/letter', () => {
 
     it('Renders a known letter in the wrong place', () => {
         render(
-            <Wrapper>
+            <TestWrapper>
                 <Letter data-testid="Letter1" row={0} index={1} />
-            </Wrapper>
+            </TestWrapper>
         )
         expect(screen.getByTestId('Letter1')).toHaveTextContent('B')
         expect(screen.getByTestId('Letter1')).toHaveStyle(
@@ -49,9 +38,9 @@ describe('components/letter', () => {
 
     it('Renders an invalid letter', () => {
         render(
-            <Wrapper>
+            <TestWrapper>
                 <Letter data-testid="Letter2" row={0} index={2} />
-            </Wrapper>
+            </TestWrapper>
         )
         expect(screen.getByTestId('Letter2')).toHaveTextContent('C')
         expect(screen.getByTestId('Letter2')).toHaveStyle(
@@ -62,9 +51,9 @@ describe('components/letter', () => {
 
     it('Renders an empty letter', () => {
         render(
-            <Wrapper>
+            <TestWrapper>
                 <Letter data-testid="Letter3" row={0} index={3} />
-            </Wrapper>
+            </TestWrapper>
         )
         expect(screen.getByTestId('Letter3')).toHaveTextContent('')
         expect(screen.getByTestId('Letter3')).toHaveStyle(
@@ -75,9 +64,9 @@ describe('components/letter', () => {
     it('Shows the trash icon and validity selector on mouse over', () => {
         act(() => {
             render(
-                <Wrapper>
+                <TestWrapper>
                     <Letter row={0} index={0} />
-                </Wrapper>
+                </TestWrapper>
             )
         })
         expect(screen.queryByTestId('letter-validity-selector')).toBeNull()
@@ -94,12 +83,12 @@ describe('components/letter', () => {
     it('Handles removing a letter by trash icon', async () => {
         act(() => {
             render(
-                <Wrapper>
+                <TestWrapper>
                     <Letter row={0} index={0} />
-                </Wrapper>
+                </TestWrapper>
             )
         })
-        expect(store.getActions()).toStrictEqual([])
+        expect(testStore.getActions()).toStrictEqual([])
         act(() => {
             fireEvent.mouseEnter(screen.getByText('A'))
         })
@@ -109,7 +98,7 @@ describe('components/letter', () => {
         act(() => {
             fireEvent.click(screen.getByTestId('remove-letter-icon'))
         })
-        expect(store.getActions()).toStrictEqual([
+        expect(testStore.getActions()).toStrictEqual([
             {
                 payload: { index: 0, letter: '', row: 0, valid: null },
                 type: STORE_KNOWN_LETTER,

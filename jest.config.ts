@@ -21,7 +21,7 @@ export default {
         '^utils(.*)': '<rootDir>/src/utils$1',
     },
     roots: ['<rootDir>'],
-    setupFilesAfterEnv: ['<rootDir>/src/utils/test.utils.ts'],
+    setupFilesAfterEnv: ['<rootDir>/src/utils/test.utils.tsx'],
     testEnvironment: 'jsdom',
     transform: {
         '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',

@@ -1,6 +1,11 @@
 import '@testing-library/jest-dom/extend-expect'
+import * as React from 'react'
+import { ReactNode } from 'react'
+import { Provider } from 'react-redux'
 import configureStore from 'redux-mock-store'
+import { ThemeProvider } from 'styled-components'
 import { AppState } from 'reducers/index'
+import { theme } from 'theme/theme'
 require('isomorphic-fetch')
 
 const mockStoreState: AppState = {
@@ -34,3 +39,14 @@ export const getStore = () => {
     const mockStore = configureStore<AppState>([])
     return mockStore(mockStoreState)
 }
+
+export const testStore = getStore()
+export const TestWrapper = ({
+    children,
+}: {
+    children: ReactNode | ReactNode[]
+}) => (
+    <Provider store={testStore}>
+        <ThemeProvider theme={theme}>{children}</ThemeProvider>
+    </Provider>
+)
