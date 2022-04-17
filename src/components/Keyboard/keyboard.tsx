@@ -49,7 +49,6 @@ export const Keyboard = () => {
         <Transition in={visible} timeout={250}>
             {(state) => (
                 <Container state={state}>
-                    {state}
                     {state !== 'exited' &&
                         rowMap.map((row, index) => (
                             <KeyRow key={index} keyCount={row.length}>
